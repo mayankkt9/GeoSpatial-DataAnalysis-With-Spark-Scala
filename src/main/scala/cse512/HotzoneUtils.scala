@@ -13,9 +13,9 @@ object HotzoneUtils {
     val rectangleMinY = math.min(queryRectangle.split(",")(1).trim().toDouble, queryRectangle.split(",")(3).trim().toDouble)
 
     if (pointX >= rectangleMinX && pointY >= rectangleMinY && pointX <= rectangleMaxX && pointY <= rectangleMaxY) {
-      true
+      return true
     } else {
-      false
+      return false
     }
     // YOU NEED TO CHANGE THIS PART
   }
