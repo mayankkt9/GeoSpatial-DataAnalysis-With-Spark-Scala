@@ -47,5 +47,38 @@ object HotcellUtils {
     return calendar.get(Calendar.DAY_OF_MONTH)
   }
 
+  def getNeighboursCount(max_X: Int, min_X: Int, max_Y: Int, min_Y: Int, max_Z: Int, min_Z: Int, inp_X: Int, inp_Y: Int, inp_Z: Int): Int = {
+    var corners = 0;
+    if (inp_X == min_X || inp_X == max_X)
+      corners = corners + 1
+
+    if (inp_Y == min_Y || inp_Y == max_Y)
+      corners = corners + 1
+
+    if (inp_Z == min_Z || inp_Z == max_Z)
+      corners = corners + 1
+
+    if (corners == 1)
+      return 17
+    else if (corners == 2)
+      return 11
+    else if (corners == 3)
+      return 7
+    else return 26
+  }
+
+  def getSquare(num: Int): Double = {
+    return (num * num).toDouble
+  }
+
+  def getGScore(sd: Double, numberOfAdjacentCells: Int, sumOfAdjacentCells: Int, numberOfCells: Int, x: Int, y: Int, z: Int, mean: Double): Double =
+  {
+    val numerator = sumOfAdjacentCells.toDouble - (mean * numberOfAdjacentCells.toDouble)
+    val denomPart= ((numberOfCells.toDouble * numberOfAdjacentCells.toDouble) - (numberOfAdjacentCells.toDouble * numberOfAdjacentCells.toDouble)) / (numberOfCells.toDouble - 1.0)
+    val denominator = sd * Math.sqrt(denomPart)
+    return numerator / denominator
+  }
+
   // YOU NEED TO CHANGE THIS PART
 }
+
