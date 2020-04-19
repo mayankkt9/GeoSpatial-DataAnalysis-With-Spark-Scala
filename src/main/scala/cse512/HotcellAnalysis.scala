@@ -69,10 +69,10 @@ def runHotcellAnalysis(spark: SparkSession, pointPath: String): DataFrame =
     "where (chs.x = ch.x + 1 or chs.x = ch.x or chs.x = ch.x - 1) and (chs.y = ch.y + 1 or chs.y = ch.y or chs.y =ch.y - 1) and (chs.z = ch.z + 1 or chs.z = ch.z or chs.z = ch.z - 1) group by ch.z, ch.y, ch.x order by ch.z, ch.y, ch.x").persist()
   totalNeighbours.createOrReplaceTempView("totalNeighbours")
 
-  spark.udf.register("CalculateGScore", (sd: Double, numberOfAdjacentCells: Int, sumOfAdjacentCells: Int, numberOfCells: Int, x: Int, y: Int, z: Int, mean: Double)
-  => HotcellUtils.getGScore(sd,numberOfAdjacentCells,sumOfAdjacentCells,numberOfCells,x,y,z,mean))
+  spark.udf.register("CalculateGScore", (x: Int, y: Int, z: Int, numberOfAdjacentCells: Int, sumOfAdjacentCells: Int, numberOfCells: Int, mean: Double, standardDeviation: Double)
+  => HotcellUtils.getGScore(x,y,z,numberOfAdjacentCells,sumOfAdjacentCells,numberOfCells,mean,standardDeviation))
   
-  val GScore = spark.sql("select CalculateGScore("+standardDeviation+", neighboursCells, calculatedValue,"+numCells+"x,y,z,"+mean+") as GScore, x, y, z from totalNeighbours order by GScore desc")
+  val GScore = spark.sql("select CalculateGScore(x, y, z, neighboursCells, calculatedValue,"+numCells+","+mean+","+standardDeviation+") as GScore, x, y, z from totalNeighbours order by GScore desc")
   GScore.createOrReplaceTempView("GScore")
 
   val result = spark.sql("select x, y, z from GScore")

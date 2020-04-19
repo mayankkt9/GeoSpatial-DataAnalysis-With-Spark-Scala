@@ -71,7 +71,7 @@ object HotcellUtils {
     return (num * num).toDouble
   }
 
-  def getGScore(sd: Double, numberOfAdjacentCells: Int, sumOfAdjacentCells: Int, numberOfCells: Int, x: Int, y: Int, z: Int, mean: Double): Double =
+  def getGScore(x: Int, y: Int, z: Int, numberOfAdjacentCells: Int, sumOfAdjacentCells: Int, numberOfCells: Int, mean: Double, sd: Double): Double =
   {
     val numerator = sumOfAdjacentCells.toDouble - (mean * numberOfAdjacentCells.toDouble)
     val denomPart= ((numberOfCells.toDouble * numberOfAdjacentCells.toDouble) - (numberOfAdjacentCells.toDouble * numberOfAdjacentCells.toDouble)) / (numberOfCells.toDouble - 1.0)
