@@ -2,24 +2,34 @@ package cse512
 
 object HotzoneUtils {
 
-  def ST_Contains(queryRectangle: String, pointString: String ): Boolean = {
-    // YOU NEED TO CHANGE THIS PART
-    val pointX = pointString.split(",")(0).trim().toDouble
-    val pointY = pointString.split(",")(1).trim().toDouble
+  def ST_Contains(queryRectangle: String, pointString: String ): Boolean = { 
 
-    val rectangleMaxX = math.max(queryRectangle.split(",")(0).trim().toDouble, queryRectangle.split(",")(2).trim().toDouble)
-    val rectangleMaxY = math.max(queryRectangle.split(",")(1).trim().toDouble, queryRectangle.split(",")(3).trim().toDouble)
-    val rectangleMinX = math.min(queryRectangle.split(",")(0).trim().toDouble, queryRectangle.split(",")(2).trim().toDouble)
-    val rectangleMinY = math.min(queryRectangle.split(",")(1).trim().toDouble, queryRectangle.split(",")(3).trim().toDouble)
+      try{
+        val point = pointString.split(",")
+        val rectangle = queryRectangle.split(",")
+        val point_x = point(0).trim().toDouble
+        val point_y = point(1).trim().toDouble
+        val rec_x1 = rectangle(0).trim().toDouble
+        val rec_y1 = rectangle(1).trim().toDouble
+        val rec_x2 = rectangle(2).trim().toDouble
+        val rec_y2 = rectangle(3).trim().toDouble
+        val low_x = scala.math.min(rec_x1, rec_x2)
+        val high_x = scala.math.max(rec_x1, rec_x2)
+        val low_y = scala.math.min(rec_y1, rec_y2)
+        val high_y = scala.math.max(rec_y1, rec_y2)
 
-    if (pointX >= rectangleMinX && pointY >= rectangleMinY && pointX <= rectangleMaxX && pointY <= rectangleMaxY) {
-      return true
-    } else {
-      return false
+        if(point_y >= low_y && point_y <= high_y && point_x >= low_x && point_x <= high_x){
+            return true
+        }
+        else{
+            return false
+        }
     }
-    // YOU NEED TO CHANGE THIS PART
+    catch {
+        case _: Throwable => return false
+    }
   }
 
-  // YOU NEED TO CHANGE THIS PART
+ 
 
 }
